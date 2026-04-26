@@ -52,4 +52,7 @@ exports.actualizarMovimiento = (req, res) => {
 exports.eliminarMovimiento = (req, res) => {
   const { id } = req.params;
   db.query('DELETE FROM movimientos WHERE id_movimiento=?', [id], (err) => {
-    if (err) 
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Movimiento eliminado correctamente' });
+  });
+};
