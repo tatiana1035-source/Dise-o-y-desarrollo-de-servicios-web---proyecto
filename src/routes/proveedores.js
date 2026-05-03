@@ -36,9 +36,7 @@ router.get('/', proveedoresController.listarProveedores);
  *             properties:
  *               nombre:
  *                 type: string
- *               nit:
- *                 type: string
- *               email:
+  *               email:
  *                 type: string
  *               telefono:
  *                 type: string

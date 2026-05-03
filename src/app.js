@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 
+const cors = require('cors');
+app.use(cors());
+
 // Importar rutas
 const productosRoutes = require('./routes/productos');
 const movimientosRoutes = require('./routes/movimientos');
@@ -26,8 +29,10 @@ app.use('/historial', historialRoutes);
 app.use('/codigos', codigosRoutes);
 
 // Swagger
+// Swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const path = require('path');
 
 const options = {
   definition: {
@@ -38,7 +43,7 @@ const options = {
       description: 'API para gestión de inventario con Node.js, Express y MySQL'
     },
   },
-  apis: ['./src/routes/*.js'],
+  apis: [path.join(__dirname, './routes/*.js')],
 };
 
 const specs = swaggerJsdoc(options);
@@ -48,4 +53,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+// Manejo error global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Error interno del servidor' });
 });

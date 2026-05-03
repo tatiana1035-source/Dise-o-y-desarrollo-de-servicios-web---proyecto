@@ -10,14 +10,14 @@ exports.listarProveedores = (req, res) => {
 
 // Crear un nuevo proveedor
 exports.crearProveedor = (req, res) => {
-  const { nombre, nit, email, telefono, direccion, ciudad } = req.body;
+  const { nombre, email, telefono, direccion, ciudad } = req.body;
   const sql = `INSERT INTO proveedores 
-    (nombre, nit, email, telefono, direccion, ciudad) 
-    VALUES (?, ?, ?, ?, ?, ?)`;
+    (nombre, email, telefono, direccion, ciudad) 
+    VALUES (?, ?, ?, ?, ?)`;
 
-  db.query(sql, [nombre, nit, email, telefono, direccion, ciudad], (err, result) => {
+  db.query(sql, [nombre, email, telefono, direccion, ciudad], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id_proveedor: result.insertId, nombre, nit, email, telefono, direccion, ciudad });
+    res.status(201).json({ id_proveedor: result.insertId, nombre, email, telefono, direccion, ciudad });
   });
 };
 
@@ -34,12 +34,12 @@ exports.obtenerProveedor = (req, res) => {
 // Actualizar proveedor por ID
 exports.actualizarProveedor = (req, res) => {
   const { id } = req.params;
-  const { nombre, nit, email, telefono, direccion, ciudad } = req.body;
+  const { nombre, email, telefono, direccion, ciudad } = req.body;
   const sql = `UPDATE proveedores 
-    SET nombre=?, nit=?, email=?, telefono=?, direccion=?, ciudad=? 
+    SET nombre=?, email=?, telefono=?, direccion=?, ciudad=? 
     WHERE id_proveedor=?`;
 
-  db.query(sql, [nombre, nit, email, telefono, direccion, ciudad, id], (err) => {
+  db.query(sql, [nombre, email, telefono, direccion, ciudad, id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ message: 'Proveedor actualizado correctamente' });
   });
