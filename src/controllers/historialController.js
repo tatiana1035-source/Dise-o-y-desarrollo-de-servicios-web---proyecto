@@ -14,12 +14,12 @@ exports.listarHistorial = (req, res) => {
 
 // Registrar una acción en el historial
 exports.registrarAccion = (req, res) => {
-  const { id_usuario, accion, descripcion } = req.body;
-  const sql = `INSERT INTO historial (id_usuario, accion, descripcion, fecha) 
-               VALUES (?, ?, ?, NOW())`;
-  db.query(sql, [id_usuario, accion, descripcion], (err, result) => {
+  const { id_usuario, id_producto, id_almacen, cantidad, accion, descripcion } = req.body;
+  const sql = `INSERT INTO historial (id_usuario, id_producto, id_almacen, cantidad, accion, descripcion, fecha) 
+               VALUES (?, ?, ?, ?, ?, ?, NOW())`;
+  db.query(sql, [id_usuario, id_producto, id_almacen, cantidad, accion, descripcion], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id_historial: result.insertId, id_usuario, accion, descripcion });
+    res.status(201).json({ id_historial: result.insertId, id_usuario, id_producto, accion, descripcion });
   });
 };
 
