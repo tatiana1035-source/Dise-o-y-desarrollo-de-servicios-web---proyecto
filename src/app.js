@@ -14,6 +14,8 @@ const categoriasRoutes = require('./routes/categorias');
 const reportesRoutes = require('./routes/reportes');
 const historialRoutes = require('./routes/historial');
 const codigosRoutes = require('./routes/codigos');
+const alertasRoutes = require('./routes/alertas');
+const pedidosRoutes = require('./routes/pedidos');
 
 // Middlewares
 app.use(express.json());
@@ -27,8 +29,9 @@ app.use('/categorias', categoriasRoutes);
 app.use('/reportes', reportesRoutes);
 app.use('/historial', historialRoutes);
 app.use('/codigos', codigosRoutes);
+app.use('/alertas', alertasRoutes);
+app.use('/pedidos', pedidosRoutes);
 
-// Swagger
 // Swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
