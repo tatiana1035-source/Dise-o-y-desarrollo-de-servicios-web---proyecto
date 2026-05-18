@@ -6,6 +6,7 @@ const cors = require('cors');
 app.use(cors());
 
 // Importar rutas
+const authRoutes = require('./routes/auth.routes');
 const productosRoutes = require('./routes/productos');
 const movimientosRoutes = require('./routes/movimientos');
 const usuariosRoutes = require('./routes/usuarios');
@@ -21,6 +22,7 @@ const pedidosRoutes = require('./routes/pedidos');
 app.use(express.json());
 
 // Rutas
+app.use('/auth', authRoutes);
 app.use('/productos', productosRoutes);
 app.use('/movimientos', movimientosRoutes);
 app.use('/usuarios', usuariosRoutes);
