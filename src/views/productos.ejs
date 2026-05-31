@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockLogistic</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-brand">&#128230; StockLogistic</div>
+    <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="/">Dashboard</a></li>
+      <li><a href="/productos">Productos</a></li>
+      <li><a href="/movimientos">Movimientos</a></li>
+      <li><a href="/proveedores">Proveedores</a></li>
+      <li><a href="/pedidos">Pedidos</a></li>
+      <li><a href="/reportes">Reportes</a></li>
+      <li><a href="/alertas">Alertas</a></li>
+      <li><a href="/categorias">Categorias</a></li>
+      <li><a href="/usuarios">Usuarios</a></li>
+      <li><a href="/historial">Historial</a></li>
+      <li><a href="/codigos">Codigos</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+
+    <h1 class="page-title">&#128230; Productos</h1>
+    <div class="toolbar">
+      <button class="btn" onclick="nuevoProducto()">+ Agregar Producto</button>
+    </div>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaProductos">
+          <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="modalProducto" class="modal-overlay" style="display:none">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="modalTitulo">Nuevo Producto</h2>
+          <button class="modal-close" onclick="cerrarModal('modalProducto')">X</button>
+        </div>
+        <div class="modal-form">
+          <input type="hidden" id="productoId" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input class="input" id="pNombre" placeholder="Nombre del producto" />
+            </div>
+            <div class="form-group">
+              <label>Codigo</label>
+              <input class="input" id="pCodigo" placeholder="PROD-001" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Precio</label>
+              <input class="input" id="pPrecio" type="number" min="0" step="0.01" placeholder="0.00" />
+            </div>
+            <div class="form-group">
+              <label>Cantidad</label>
+              <input class="input" id="pCantidad" type="number" min="0" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label>Stock Minimo</label>
+              <input class="input" id="pStockMin" type="number" min="0" placeholder="0" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>ID Categoria</label>
+              <input class="input" id="pCategoria" type="number" min="1" placeholder="ID categoria" />
+            </div>
+            <div class="form-group">
+              <label>ID Proveedor</label>
+              <input class="input" id="pProveedor" type="number" min="1" placeholder="ID proveedor" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Descripcion</label>
+            <textarea class="input" id="pDescripcion" rows="2" placeholder="Descripcion opcional"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalProducto')">Cancelar</button>
+            <button type="button" class="btn" onclick="guardarProducto()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script>cargarProductos();</script>
+</body>
+</html>

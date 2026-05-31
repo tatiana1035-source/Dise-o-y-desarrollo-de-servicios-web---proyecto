@@ -114,3 +114,14 @@ router.delete('/:id', productosController.eliminarProducto);
 
 module.exports = router;
 
+// Ruta para la vista HTML
+router.get('/', (req, res) => {
+  res.render('productos', { titulo: 'Productos' });
+});
+
+// Ruta para la API JSON
+router.get('/api', productosController.listarProductos);
+router.post('/api', productosController.crearProducto);
+router.get('/api/:id', productosController.obtenerProducto);
+router.put('/api/:id', productosController.actualizarProducto);
+router.delete('/api/:id', productosController.eliminarProducto);

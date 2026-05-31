@@ -1,0 +1,23 @@
+<%- include('layout/base.ejs', { titulo: titulo, script: 'cargarHistorial();', body: `
+  <h1 class="page-title">📜 Historial</h1>
+  <div class="toolbar">
+  <button class="btn" onclick="exportarHistorialCSV()">⬇️ Exportar CSV</button>
+  </div>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Acción</th>
+          <th>Usuario</th>
+          <th>Descripcion</th>
+          <th>Fecha</th>
+        
+        </tr>
+      </thead>
+      <tbody id="tablaHistorial">
+        <tr><td colspan="5" class="text-center">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+` }) %>

@@ -1,0 +1,56 @@
+<%- include('layout/base.ejs', { titulo: titulo, script: 'cargarMovimientos();', body: `
+  <h1 class="page-title">🔄 Movimientos</h1>
+  <div class="toolbar">
+    <button class="btn" onclick="nuevoMovimiento()">+ Registrar Movimiento</button>
+  </div>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Tipo</th>
+          <th>Cantidad</th>
+          <th>Fecha</th>
+          <th>Usuario</th>
+        </tr>
+      </thead>
+      <tbody id="tablaMovimientos">
+        <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="modalMovimiento" class="modal-overlay" style="display:none">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Registrar Movimiento</h2>
+        <button class="modal-close" onclick="cerrarModal('modalMovimiento')">X</button>
+      </div>
+      <div class="modal-form">
+        <input type="hidden" id="movimientoId" />
+        <div class="form-group">
+          <label>ID Producto</label>
+          <input class="input" id="mProducto" type="number" placeholder="ID del producto" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo</label>
+            <select class="input" id="mTipo">
+              <option value="entrada">Entrada</option>
+              <option value="salida">Salida</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Cantidad</label>
+            <input class="input" id="mCantidad" type="number" min="1" placeholder="0" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalMovimiento')">Cancelar</button>
+          <button type="button" class="btn" onclick="guardarMovimiento()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+` }) %>

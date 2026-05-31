@@ -29,3 +29,31 @@ exports.actualizarCantidadPorCodigo = (req, res) => {
     res.json({ message: `Cantidad actualizada correctamente (${tipo})` });
   });
 };
+
+// Listar todos los códigos
+exports.listarCodigos = (req, res) => {
+  db.query('SELECT * FROM codigos', (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
+};
+
+// Crear código
+exports.crearCodigo = (req, res) => {
+  const { id_producto, codigo, tipo } = req.body;
+  const fecha_registro = new Date();
+  const sql = 'INSERT INTO codigos (id_producto, codigo, tipo, fecha_registro) VALUES (?, ?, ?, ?)';
+  db.query(sql, [id_producto, codigo, tipo, fecha_registro], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id_codigo: result.insertId, id_producto, codigo, tipo });
+  });
+};
+
+// Eliminar código
+exports.eliminarCodigo = (req, res) => {
+  const { id } = req.params;
+  db.query('DELETE FROM codigos WHERE id_codigo = ?', [id], (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Código eliminado correctamente' });
+  });
+};

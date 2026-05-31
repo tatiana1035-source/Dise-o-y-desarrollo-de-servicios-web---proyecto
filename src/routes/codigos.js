@@ -9,6 +9,10 @@ const codigosController = require('../controllers/codigosController');
  *   description: Lectura de códigos de barras y QR
  */
 
+router.get('/', codigosController.listarCodigos);
+router.post('/', codigosController.crearCodigo);
+router.delete('/:id', codigosController.eliminarCodigo);
+
 /**
  * @swagger
  * /codigos/{codigo}:

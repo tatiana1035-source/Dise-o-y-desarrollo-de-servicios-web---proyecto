@@ -1,11 +1,10 @@
 // ============================================================
 // auth.controller.js
 // Controlador de autenticación
-// GA8-220501096-AA1-EV01
 // ============================================================
 
 const authService    = require('../services/auth.service');
-const UserRepository = require('../repositories/user.repository'); // Adaptarlo al modelo real
+const UserRepository = require('../repositories/user.repository'); // Nombre del repositorio real
 
 const register = async (req, res) => {
   try {

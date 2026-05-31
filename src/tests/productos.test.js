@@ -31,7 +31,7 @@ describe('Módulo Productos', () => {
         stock_minimo: 2,
         fecha_registro: '2026-01-01',
         activo: 1,
-        codigo_producto: 'TEST007',
+        codigo_producto: 'TEST010',
         descripcion: 'Producto de prueba',
         id_categoria: 1,
         id_proveedor: 1

@@ -24,6 +24,29 @@ exports.crearMovimiento = (req, res) => {
   });
 };
 
+async function guardarMovimiento() {
+  const id = document.getElementById('movimientoId').value;
+  const body = {
+    id_producto: document.getElementById('mProducto').value,
+    tipo: document.getElementById('mTipo').value,
+    cantidad: document.getElementById('mCantidad').value,
+    fecha: new Date().toISOString().split('T')[0],
+    id_almacen: 1,
+    id_usuario: null
+  };
+  
+  const url = id ? `/api/movimientos/${id}` : '/api/movimientos';
+  const method = id ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error();
+    cerrarModal('modalMovimiento');
+    window.location.reload();
+  } catch {
+    alert('Error al guardar el movimiento');
+  }
+}
+
 // Obtener movimiento por ID
 exports.obtenerMovimiento = (req, res) => {
   const { id } = req.params;

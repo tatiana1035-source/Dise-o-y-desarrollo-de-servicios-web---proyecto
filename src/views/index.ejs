@@ -1,0 +1,68 @@
+<%- include('layout/base.ejs', { titulo: titulo, body: `
+
+  <h1 class="page-title">Dashboard</h1>
+
+  <div class="cards-grid">
+    <div class="card">
+      <span class="card-icon">📦</span>
+      <h3>Productos</h3>
+      <p>Gestiona tu inventario</p>
+      <a href="/productos" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <h3>Movimientos</h3>
+      <p>Entradas y salidas</p>
+      <a href="/movimientos" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🚚</span>
+      <h3>Proveedores</h3>
+      <p>Gestiona proveedores</p>
+      <a href="/proveedores" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">📋</span>
+      <h3>Pedidos</h3>
+      <p>Control de pedidos</p>
+      <a href="/pedidos" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">📊</span>
+      <h3>Reportes</h3>
+      <p>Estadísticas y reportes</p>
+      <a href="/reportes" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔔</span>
+      <h3>Alertas</h3>
+      <p>Alertas de stock</p>
+      <a href="/alertas" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏷️</span>
+      <h3>Categorías</h3>
+      <p>Gestiona categorías</p>
+      <a href="/categorias" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">👤</span>
+      <h3>Usuarios</h3>
+      <p>Gestiona usuarios</p>
+      <a href="/usuarios" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">📜</span>
+      <h3>Historial</h3>
+      <p>Registro de actividad</p>
+      <a href="/historial" class="btn">Ver</a>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔖</span>
+      <h3>Códigos</h3>
+      <p>Gestiona códigos</p>
+      <a href="/codigos" class="btn">Ver</a>
+    </div>
+  </div>
+
+` }) %>

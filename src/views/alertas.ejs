@@ -1,0 +1,20 @@
+<%- include('layout/base.ejs', { titulo: titulo, script: 'cargarAlertas();', body: `
+  <h1 class="page-title">🔔 Alertas</h1>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Tipo</th>
+          <th>Mensaje</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="tablaAlertas">
+        <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+` }) %>

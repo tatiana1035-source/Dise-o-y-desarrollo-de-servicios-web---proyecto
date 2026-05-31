@@ -26,7 +26,7 @@ describe('Módulo Usuarios', () => {
       .post('/usuarios')
       .send({
         nombre: 'Usuario Test',
-        correo: 'test_jest99@correo.com',
+        correo: 'test_jest89@correo.com',
         rol: 'auxiliar',
         clave: 'Test1234*'
       });

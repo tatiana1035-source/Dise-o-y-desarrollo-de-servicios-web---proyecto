@@ -1,0 +1,23 @@
+<%- include('layout/base.ejs', { titulo: titulo, script: 'cargarReportes();', body: `
+  <h1 class="page-title">📊 Reportes</h1>
+  <div class="cards-grid">
+    <div class="card">
+      <span class="card-icon">📦</span>
+      <h3>Reporte de Stock</h3>
+      <p>Estado actual del inventario</p>
+      <button class="btn">Generar</button>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <h3>Reporte de Movimientos</h3>
+      <p>Entradas y salidas por período</p>
+      <button class="btn">Generar</button>
+    </div>
+    <div class="card">
+      <span class="card-icon">🚚</span>
+      <h3>Reporte de Proveedores</h3>
+      <p>Compras por proveedor</p>
+      <button class="btn">Generar</button>
+    </div>
+  </div>
+` }) %>

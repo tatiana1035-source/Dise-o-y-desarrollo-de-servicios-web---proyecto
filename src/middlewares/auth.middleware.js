@@ -1,7 +1,6 @@
 // ============================================================
 // auth.middleware.js
 // Mecanismo de seguridad: Verificación de token JWT
-// GA8-220501096-AA1-EV01
 // ============================================================
 
 const jwt = require('jsonwebtoken');

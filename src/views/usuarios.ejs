@@ -1,0 +1,60 @@
+<%- include('layout/base.ejs', { titulo: titulo, script: 'cargarUsuarios();', body: `
+  <h1 class="page-title">👤 Usuarios</h1>
+  <div class="toolbar">
+        <button class="btn" onclick="nuevoUsuario()">+ Nuevo Usuario</button>
+  </div>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaUsuarios">
+        <tr><td colspan="5" class="text-center">Cargando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="modalUsuario" class="modal-overlay" style="display:none">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTituloUsuario">Nuevo Usuario</h2>
+        <button class="modal-close" onclick="cerrarModal('modalUsuario')">X</button>
+      </div>
+      <div class="modal-form">
+        <input type="hidden" id="usuarioId" />
+        <div class="form-group">
+          <label>Nombre</label>
+          <input class="input" id="uNombre" placeholder="Nombre completo" />
+        </div>
+        <div class="form-group">
+          <label>Correo</label>
+          <input class="input" id="uCorreo" type="email" placeholder="correo@ejemplo.com" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Rol</label>
+            <select class="input" id="uRol">
+              <option value="auxiliar">Auxiliar</option>
+              <option value="lider">Líder</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input class="input" id="uClave" type="password" placeholder="••••••••" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalUsuario')">Cancelar</button>
+          <button type="button" class="btn" onclick="guardarUsuario()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+` }) %>

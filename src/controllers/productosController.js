@@ -1,7 +1,13 @@
 const db = require('../config/db');
 
-// Listar todos los productos
 exports.listarProductos = (req, res) => {
+  const esAPI = req.headers['x-requested-with'] === 'XMLHttpRequest' 
+             || req.headers.accept === 'application/json';
+  
+  if (!esAPI) {
+    return res.render('productos', { titulo: 'Productos' });
+  }
+  
   db.query('SELECT * FROM producto', (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);

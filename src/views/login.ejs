@@ -1,0 +1,16 @@
+<%- include('layout/base.ejs', { titulo: titulo, body: `
+  <div class="login-container">
+    <div class="login-card">
+      <h2>🔐 Iniciar Sesión</h2>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="correo@ejemplo.com" class="input" />
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" class="input" />
+      </div>
+      <button class="btn btn-block" onclick="login()">Entrar</button>
+    </div>
+  </div>
+` }) %>
