@@ -1,61 +1,56 @@
 const db = require('../config/db');
 
-exports.listarProductos = (req, res) => {
-  const esAPI = req.headers['x-requested-with'] === 'XMLHttpRequest' 
-             || req.headers.accept === 'application/json';
-  
-  if (!esAPI) {
-    return res.render('productos', { titulo: 'Productos' });
-  }
-  
-  db.query('SELECT * FROM producto', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+// 
+exports.listarProductos = async (req, res) => {
+  try {
+    const [results] = await db.query('SELECT * FROM producto');
     res.json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // Crear un nuevo producto
-exports.crearProducto = (req, res) => {
+exports.crearProducto = async (req, res) => {
   const { nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor } = req.body;
-  const sql = `INSERT INTO producto 
-    (nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  
-  db.query(sql, [nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id_producto: result.insertId, nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor });
-  });
+  const sql = `INSERT INTO producto (nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  try {
+    const [result] = await db.query(sql, [nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor]);
+    res.status(201).json({ id_producto: result.insertId });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // Obtener producto por ID
-exports.obtenerProducto = (req, res) => {
-  const { id } = req.params;
-  db.query('SELECT * FROM producto WHERE id_producto = ?', [id], (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (results.length === 0) return res.status(404).json({ message: 'Producto no encontrado' });
+exports.obtenerProducto = async (req, res) => {
+  try {
+    const [results] = await db.query('SELECT * FROM producto WHERE id_producto = ?', [req.params.id]);
+    if (!results.length) return res.status(404).json({ message: 'Producto no encontrado' });
     res.json(results[0]);
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // Actualizar producto por ID
-exports.actualizarProducto = (req, res) => {
-  const { id } = req.params;
+exports.actualizarProducto = async (req, res) => {
   const { nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor } = req.body;
-  const sql = `UPDATE producto 
-    SET nombre=?, precio=?, cantidad=?, stock_minimo=?, fecha_registro=?, activo=?, codigo_producto=?, descripcion=?, id_categoria=?, id_proveedor=? 
-    WHERE id_producto=?`;
-  
-  db.query(sql, [nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor, id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+  const sql = `UPDATE producto SET nombre=?, precio=?, cantidad=?, stock_minimo=?, fecha_registro=?, activo=?, codigo_producto=?, descripcion=?, id_categoria=?, id_proveedor=? WHERE id_producto=?`;
+  try {
+    await db.query(sql, [nombre, precio, cantidad, stock_minimo, fecha_registro, activo, codigo_producto, descripcion, id_categoria, id_proveedor, req.params.id]);
     res.json({ message: 'Producto actualizado correctamente' });
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // Eliminar producto por ID
-exports.eliminarProducto = (req, res) => {
-  const { id } = req.params;
-  db.query('DELETE FROM producto WHERE id_producto=?', [id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+exports.eliminarProducto = async (req, res) => {
+  try {
+    await db.query('DELETE FROM producto WHERE id_producto=?', [req.params.id]);
     res.json({ message: 'Producto eliminado correctamente' });
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

@@ -13,10 +13,11 @@
           <th>Cantidad</th>
           <th>Fecha</th>
           <th>Usuario</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="tablaMovimientos">
-        <tr><td colspan="6" class="text-center">Cargando...</td></tr>
+        <tr><td colspan="7" class="text-center">Cargando...</td></tr>
       </tbody>
     </table>
   </div>
@@ -24,7 +25,7 @@
   <div id="modalMovimiento" class="modal-overlay" style="display:none">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>Registrar Movimiento</h2>
+        <h2 id="modalTituloMovimiento">Registrar Movimiento</h2>
         <button class="modal-close" onclick="cerrarModal('modalMovimiento')">X</button>
       </div>
       <div class="modal-form">

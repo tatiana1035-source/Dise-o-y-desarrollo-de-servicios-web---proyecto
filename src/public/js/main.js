@@ -364,7 +364,7 @@ async function cargarMovimientos() {
   try {
     const res = await fetch('/api/movimientos');
     const data = await res.json();
-    if (!data.length) return mostrarVacio('tablaMovimientos', 5);
+    if (!data.length) return mostrarVacio('tablaMovimientos', 7);
     tbody.innerHTML = data.map(m => `
       <tr>
         <td>${m.id_movimiento}</td>
@@ -374,9 +374,13 @@ async function cargarMovimientos() {
         <td>${m.fecha ? new Date(m.fecha).toLocaleDateString('es-CO') : '-'}</td>
         <td>${m.id_usuario ?? '-'}</td>
 
-      </tr>`).join('');
+        <td>
+          <button class="btn btn-sm btn-warning" onclick="editarMovimiento(${m.id_movimiento})">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarMovimiento(${m.id_movimiento})">🗑️</button>
+          </td>
+          </tr>`).join('');
   } catch {
-    mostrarError('tablaMovimientos', 5, 'Error al cargar movimientos');
+    mostrarError('tablaMovimientos', 7, 'Error al cargar movimientos');
   }
 }
    function nuevoMovimiento() {
@@ -385,6 +389,7 @@ async function cargarMovimientos() {
     document.getElementById('mProducto').value = '';
     document.getElementById('mTipo').value = '';
     document.getElementById('mCantidad').value = '';
+    document.getElementById('modalTituloMovimiento').textContent ='Registar Movimiento';
     abrirModal( 'modalMovimiento');
    }
   async function guardarMovimiento() {
@@ -411,6 +416,30 @@ async function cargarMovimientos() {
     window.location.reload();
   } catch {
     alert('Error al guardar el movimiento');
+  }
+}
+async function editarMovimiento(id) {
+  try {
+    const res = await fetch(`/api/movimientos/${id}`);
+    const m = await res.json();
+    document.getElementById('movimientoId').value = m.id_movimiento;
+    document.getElementById('mProducto').value = m.id_producto ?? '';
+    document.getElementById('mTipo').value = m.tipo ?? 'entrada';
+    document.getElementById('mCantidad').value = m.cantidad;
+    document.getElementById('modalTituloMovimiento').textContent = 'EditarMovimiento';
+    abrirModal('modalMovimiento');
+  } catch {
+    alert('Error al cargar el movimiento');
+  }
+}
+
+async function eliminarMovimiento(id) {
+  if (!confirm('¿Eliminar este movimiento?')) return;
+  try {
+    await fetch(`/api/movimientos/${id}`, { method: 'DELETE' });
+    window.location.reload();
+  } catch {
+    alert('Error al eliminar el movimiento');
   }
 }
 // =====================
@@ -631,5 +660,37 @@ async function eliminarCodigo(id) {
     window.location.reload();
   } catch {
     alert('Error al eliminar el código');
+  }
+}
+
+// =====================
+// LOGIN
+// =====================
+async function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  if (!email || !password) {
+    alert('Por favor ingresa tu correo y contraseña');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem('token', data.data.token);
+      window.location.href = '/index';
+    } else {
+      alert('Error: ' + data.message);
+    }
+  } catch (e) {
+    alert('No se pudo conectar con el servidor');
   }
 }

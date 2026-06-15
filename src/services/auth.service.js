@@ -35,7 +35,7 @@ const registerUser = async (userData, userRepository) => {
   const { nombre, email, password, rol } = userData;
 
   
-  const existing = await userRepository.findOne({ where: { email } });
+  const existing = await userRepository.findByEmail(email);
   if (existing) {
     throw new Error('El correo electrónico ya está registrado.');
   }
@@ -55,21 +55,21 @@ const registerUser = async (userData, userRepository) => {
 // Iniciar sesión
 const loginUser = async (email, password, userRepository) => {
   // 1. Buscar usuario por email
-  const user = await userRepository.findOne({ where: { email } });
+  const user = await userRepository.findByEmail(email);
   if (!user) {
     throw new Error('Credenciales incorrectas.'); // Mensaje genérico por seguridad
   }
 
-    const isMatch = await comparePassword(password, user.password);
+    const isMatch = await comparePassword(password, user.clave);
   if (!isMatch) {
     throw new Error('Credenciales incorrectas.');
   }
 
-  const token = generateToken({ id: user.id, email: user.email, rol: user.rol });
+  const token = generateToken({ id: user.id, email: user.correo, rol: user.rol });
 
   return {
     token,
-    user: { id: user.id, nombre: user.nombre, email: user.email, rol: user.rol },
+    user: { id: user.id, nombre: user.nombre, email: user.correo, rol: user.rol },
   };
 };
 

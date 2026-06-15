@@ -79,7 +79,7 @@ Crea un archivo `.env` en la raíz del proyecto con los siguientes datos:
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=tu_contraseña
-DB_NAME=stocklogistic
+DB_NAME=stocklogistic2
 PORT=3000
 ```
 
@@ -108,35 +108,30 @@ npm test
 ```
 stocklogistic/
 ├── src/
-│   ├── modules/
-│   │   ├── inventario/
-│   │   ├── movimientos/
-│   │   ├── alertas/
-│   │   ├── reportes/
-│   │   └── proveedores/
 │   ├── config/
-│   └── app.js
-├── test/
-│   ├── inventario.test.js
-│   ├── movimientos.test.js
-│   ├── alertas.test.js
-│   ├── reportes.test.js
-│   └── proveedores.test.js
+│   │   └── db.js
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── repositories/
+│   ├── routes/
+│   ├── services/
+│   ├── tests/
+│   └── views/
+├── public/
+│   ├── css/
+│   └── js/
 ├── database/
-│   └── stocklogistic.sql
 ├── .env.example
 ├── package.json
-└── README.md
+└── app.js
 ```
-
----
 
 ## 👤 Autor
 
 **Nombre:** Yuli Tatiana Moreno Vásquez
 **Programa:** Análisis y Desarrollo de Software  
 **Institución:** SENA  
-**Año:** 2025  
+**Año:** 2026
 
 ---
 

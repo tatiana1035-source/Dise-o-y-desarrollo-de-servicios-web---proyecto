@@ -1,60 +1,59 @@
 const db = require('../config/db');
 
 // Listar todas las alertas
-exports.listarAlertas = (req, res) => {
-  db.query('SELECT * FROM alertas', (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+exports.listarAlertas = async (req, res) => {
+  try {
+    const [results] = await db.query('SELECT * FROM alertas');
     res.json(results);
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
 // Crear una nueva alerta
-exports.crearAlerta = (req, res) => {
+exports.crearAlerta = async (req, res) => {
   const { id_producto, tipo, mensaje, estado } = req.body;
   const fecha = new Date();
-  const sql = `INSERT INTO alertas (id_producto, tipo, mensaje, fecha, estado) VALUES (?, ?, ?, ?, ?)`;
-
-  db.query(sql, [id_producto, tipo, mensaje, fecha, estado || 'pendiente'], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
+  try {
+    const [result] = await db.query(
+      'INSERT INTO alertas (id_producto, tipo, mensaje, fecha, estado) VALUES (?, ?, ?, ?, ?)',
+      [id_producto, tipo, mensaje, fecha, estado || 'pendiente']
+    );
     res.status(201).json({ id_alerta: result.insertId, id_producto, tipo, mensaje, fecha, estado });
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
 // Obtener alerta por ID
-exports.obtenerAlerta = (req, res) => {
-  const { id } = req.params;
-  db.query('SELECT * FROM alertas WHERE id_alertas = ?', [id], (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (results.length === 0) return res.status(404).json({ message: 'Alerta no encontrada' });
+exports.obtenerAlerta = async (req, res) => {
+  try {
+    const [results] = await db.query('SELECT * FROM alertas WHERE id_alertas = ?', [req.params.id]);
+    if (!results.length) return res.status(404).json({ message: 'Alerta no encontrada' });
     res.json(results[0]);
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
 // Actualizar alerta por ID
-exports.actualizarAlerta = (req, res) => {
-  const { id } = req.params;
+exports.actualizarAlerta = async (req, res) => {
   const { id_producto, tipo, mensaje, estado } = req.body;
-  const sql = `UPDATE alertas SET id_producto=?, tipo=?, mensaje=?, estado=? WHERE id_alertas=?`;
-
-  db.query(sql, [id_producto, tipo, mensaje, estado, id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+  try {
+    await db.query(
+      'UPDATE alertas SET id_producto=?, tipo=?, mensaje=?, estado=? WHERE id_alertas=?',
+      [id_producto, tipo, mensaje, estado, req.params.id]
+    );
     res.json({ message: 'Alerta actualizada correctamente' });
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
 // Eliminar alerta por ID
-exports.eliminarAlerta = (req, res) => {
-  const { id } = req.params;
-  db.query('DELETE FROM alertas WHERE id_alertas=?', [id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
+exports.eliminarAlerta = async (req, res) => {
+  try {
+    await db.query('DELETE FROM alertas WHERE id_alertas=?', [req.params.id]);
     res.json({ message: 'Alerta eliminada correctamente' });
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
 // Listar alertas pendientes
-exports.alertasPendientes = (req, res) => {
-  db.query("SELECT * FROM alertas WHERE estado = 'pendiente'", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+exports.alertasPendientes = async (req, res) => {
+  try {
+    const [results] = await db.query("SELECT * FROM alertas WHERE estado = 'pendiente'");
     res.json(results);
-  });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 };

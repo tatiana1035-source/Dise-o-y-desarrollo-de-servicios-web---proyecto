@@ -39,6 +39,7 @@ app.use('/api/historial', historialRoutes);
 app.use('/api/codigos', codigosRoutes);
 app.use('/api/alertas', alertasRoutes);
 app.use('/api/pedidos', pedidosRoutes);
+app.use('/api/auth', authRoutes);
 
 // VISTAS WEB:
 const vistas = [
@@ -53,8 +54,16 @@ vistas. forEach(vista => {
 });
 
 // Ruta principal → sirve el frontend
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
+  res.render('login', { titulo: 'Iniciar Sesión' });
+});
+
+app.get('/index', (req, res) => {
   res.render('index', { titulo: 'StockLogistic' });
+});
+
+app.get('/', (req, res) => {
+  res.redirect('/login');
 });
 
 // Swagger
